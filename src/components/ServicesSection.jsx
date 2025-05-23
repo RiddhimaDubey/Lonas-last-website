@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import goggle from '../assets/goggle.png';
+import latpot from '../assets/img1.png';
 
 const ServicesSection = () => {
   const sectionRef = useRef(null);
@@ -26,7 +28,7 @@ const ServicesSection = () => {
 
   const services = [
     {
-      title: "Gamified Learning Platform",
+      title: "Gamified EdTech Platform",
       description: "Interactive, game-based learning experiences that make education engaging and effective for students of all ages.",
       icon: (
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,17 +61,22 @@ const ServicesSection = () => {
   ];
 
   const researchProjects = [
-    {
-      title: "Smart Goggle",
-      description: "Revolutionary wearable technology that enhances learning through augmented reality, providing immersive educational experiences.",
-      image: "/src/assets/images/smart-goggle.jpg"
-    },
-    {
-      title: "Project Aurora",
-      description: "Advanced AI-driven learning platform that adapts to individual learning styles and provides personalized education paths.",
-      image: "/src/assets/images/project-aurora.jpg"
-    }
+    
+      {
+        title: "Smart Goggle",
+        description: "Revolutionary wearable technology that enhances learning through augmented reality, providing immersive educational experiences.",
+        image: goggle,
+        link: "/projects/smart-goggle" // <-- Internal route or external URL
+      },
+      {
+        title: "Project Aurora",
+        description: "Advanced AI-driven learning platform that adapts to individual learning styles and provides personalized education paths.",
+        image: latpot,
+        link: "/projects/project-aurora"
+      }
   ];
+    
+  
 
   return (
     <section ref={sectionRef} id="services" style={{ padding: '8rem 0', backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
@@ -79,7 +86,7 @@ const ServicesSection = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h2 className="section-title">Services, Products & Research</h2>
+          <h2 className="section-title">Our Products and Services</h2>
           
           {/* Services */}
           <div className="grid" style={{ 
@@ -130,6 +137,7 @@ const ServicesSection = () => {
           
           {/* Research Projects */}
           <motion.h3 
+            id="research"
             variants={itemVariants}
             style={{ 
               fontSize: '1.8rem', 
@@ -182,21 +190,40 @@ const ServicesSection = () => {
                     backgroundColor: index === 0 ? 'rgba(0, 194, 255, 0.2)' : 'rgba(255, 62, 108, 0.2)'
                   }}>
                     <h3 style={{ color: index === 0 ? 'var(--accent-color)' : 'var(--accent-color-alt)' }}>
-                      {project.title}
+                    
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      style={{ 
+                        maxWidth: '100%', 
+                        maxHeight: '100%', 
+                        objectFit: 'cover'
+                         
+                      }} 
+                    />
                     </h3>
                   </div>
                 </div>
                 <div style={{ padding: '2rem' }}>
                   <h3 style={{ marginBottom: '1rem' }}>{project.title}</h3>
+                  
                   <p>{project.description}</p>
-                  <motion.button 
-                    className="btn btn-outline"
-                    style={{ marginTop: '1.5rem' }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ textDecoration: 'none' }}
                   >
-                    Learn More
-                  </motion.button>
+                    <motion.button 
+                      className="btn btn-outline"
+                      style={{ marginTop: '1.5rem' }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Learn More
+                    </motion.button>
+                  </a>
+
                 </div>
               </motion.div>
             ))}

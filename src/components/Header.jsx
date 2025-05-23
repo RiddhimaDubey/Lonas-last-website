@@ -1,39 +1,47 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import logo from '../assets/images/logo/Lanos LOGO.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location]);
-
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Research', path: '/research' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Home', href: '#hero' },
+    { name: 'About', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'Benefits', href: '#benefits' },
+    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Team', href: '#team' },
+    { name: 'Insights', href: '#insights' },
+    { name: 'Contact', href: '#contact' }
   ];
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const target = document.getElementById(href.replace('#', ''));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
 
   const headerVariants = {
     initial: { y: -100, opacity: 0 },
@@ -42,18 +50,15 @@ const Header = () => {
 
   const navItemVariants = {
     initial: { y: -20, opacity: 0 },
-    animate: (i) => ({ 
-      y: 0, 
-      opacity: 1, 
-      transition: { 
-        delay: 0.1 * i,
-        duration: 0.4
-      } 
+    animate: (i) => ({
+      y: 0,
+      opacity: 1,
+      transition: { delay: 0.1 * i, duration: 0.4 }
     })
   };
 
   return (
-    <motion.header 
+    <motion.header
       className={`header ${isScrolled ? 'scrolled' : ''}`}
       variants={headerVariants}
       initial="initial"
@@ -68,130 +73,154 @@ const Header = () => {
         backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.9)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(10px)' : 'none',
         transition: 'all 0.3s ease',
-        borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
+        borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.1)' : 'none'
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center' }}>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 700 }}>
-              <span className="highlight">Lanos</span>
-            </h2>
-          </motion.div>
-        </Link>
+        <div className="logo" style={{ display: 'flex', alignItems: 'center' }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={logo} alt="Lanos Logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
+          </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          {navItems.map((item, index) => (
-            <motion.div
-              key={item.name}
-              custom={index}
-              variants={navItemVariants}
-              initial="initial"
-              animate="animate"
-              style={{ display: { xs: 'none', md: 'block' } }}
-            >
-              <Link 
-                to={item.path} 
-                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+        {/* Desktop Nav */}
+        {!isMobile && (
+          <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+            {navItems.map((item, index) => (
+              <motion.a
+                key={item.name}
+                href={item.href}
+                custom={index}
+                variants={navItemVariants}
+                initial="initial"
+                animate="animate"
+                onClick={(e) => handleNavClick(e, item.href)}
                 style={{
+                  cursor: 'pointer',
                   color: 'var(--text-color)',
                   fontWeight: 500,
-                  position: 'relative',
-                  padding: '0.5rem 0'
+                  padding: '0.5rem 0',
+                  textDecoration: 'none'
                 }}
               >
                 {item.name}
-                {location.pathname === item.path && (
-                  <motion.div 
-                    layoutId="underline"
-                    style={{
-                      position: 'absolute',
-                      bottom: '-2px',
-                      left: 0,
-                      right: 0,
-                      height: '2px',
-                      backgroundColor: 'var(--accent-color)'
-                    }}
-                  />
-                )}
+              </motion.a>
+            ))}
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.6, duration: 0.3 }}>
+              <Link to="/benefits-registration">
+                <button className="btn btn-primary" style={{ marginLeft: '1rem', cursor: 'pointer' }}>
+                  Get Started
+                </button>
               </Link>
             </motion.div>
-          ))}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.3 }}
-          >
-            <Link to="/contact" className="btn btn-primary" style={{ marginLeft: '1rem' }}>
-              Get Started
-            </Link>
-          </motion.div>
-        </nav>
+          </nav>
+        )}
 
-        {/* Mobile Menu Button */}
-        <div className="mobile-menu-btn" style={{ display: { md: 'none' } }}>
-          <button 
+        {/* Mobile Menu Toggle */}
+        {isMobile && (
+          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ 
-              background: 'transparent', 
-              border: 'none', 
+            style={{
+              background: 'transparent',
+              border: 'none',
               color: 'var(--text-color)',
-              fontSize: '1.5rem'
+              fontSize: '1.5rem',
+              cursor: 'pointer'
             }}
+            aria-label="Toggle menu"
           >
             <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} />
           </button>
-        </div>
+        )}
       </div>
 
-      {/* Mobile Navigation */}
-      <motion.div 
-        className="mobile-nav"
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ 
-          height: mobileMenuOpen ? 'auto' : 0,
-          opacity: mobileMenuOpen ? 1 : 0,
-          display: mobileMenuOpen ? 'flex' : 'none'
-        }}
-        transition={{ duration: 0.3 }}
-        style={{
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          width: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.95)',
-          backdropFilter: 'blur(10px)',
-          flexDirection: 'column',
-          padding: mobileMenuOpen ? '1rem 0' : 0,
-          overflow: 'hidden'
-        }}
-      >
-        {navItems.map((item, index) => (
-          <Link 
-            key={item.name}
-            to={item.path} 
-            className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-            style={{
-              color: 'var(--text-color)',
-              padding: '1rem 2rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-              fontWeight: location.pathname === item.path ? 600 : 400
-            }}
-          >
-            {item.name}
-          </Link>
-        ))}
-        <div style={{ padding: '1rem 2rem' }}>
-          <Link to="/contact" className="btn btn-primary" style={{ width: '100%', textAlign: 'center' }}>
-            Get Started
-          </Link>
-        </div>
-      </motion.div>
+      {/* Mobile Nav */}
+      {isMobile && (
+        <motion.div
+          initial={{ maxHeight: 0, opacity: 0 }}
+          animate={{
+            maxHeight: mobileMenuOpen ? '100vh' : 0,
+            opacity: mobileMenuOpen ? 1 : 0,
+            display: mobileMenuOpen ? 'flex' : 'none'
+          }}
+          transition={{ duration: 0.3 }}
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: 0,
+            width: '100%',
+            height: 'auto',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            backdropFilter: 'blur(10px)',
+            flexDirection: 'column',
+            padding: mobileMenuOpen ? '1rem 0' : 0,
+            zIndex: 1000
+          }}
+        >
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              style={{
+                color: 'var(--text-color)',
+                padding: '1rem 2rem',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                fontWeight: 400,
+                textDecoration: 'none',
+                cursor: 'pointer',
+                display: 'block',
+                width: '100%'
+              }}
+            >
+              {item.name}
+            </a>
+          ))}
+          <div style={{ 
+            padding: '1rem 2rem',
+            marginTop: 'auto',
+            borderTop: '1px solid rgba(255,255,255,0.05)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <Link to="/benefits-registration" style={{ width: '100%', display: 'block' }}>
+              <button 
+                className="btn btn-primary" 
+                style={{ 
+                  width: '100%', 
+                  textAlign: 'center', 
+                  cursor: 'pointer',
+                  padding: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: '500',
+                  backgroundColor: '#00c2ff'
+                }}
+              >
+                Get Started
+              </button>
+            </Link>
+            <Link to="/event" style={{ width: '100%', display: 'block' }}>
+              <button 
+                className="btn btn-secondary" 
+                style={{ 
+                  width: '100%', 
+                  textAlign: 'center', 
+                  cursor: 'pointer',
+                  padding: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: '500',
+                  backgroundColor: 'transparent',
+                  border: '2px solid #00c2ff',
+                  color: '#00c2ff'
+                }}
+              >
+                Register for Event
+              </button>
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </motion.header>
   );
 };

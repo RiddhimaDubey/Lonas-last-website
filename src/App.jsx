@@ -1,21 +1,30 @@
 import { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Header from './components/Header'
+import Header from './components/HeaderUpdated'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import About from './pages/About'
-import Services from './pages/Services'
-import Research from './pages/Research'
-import Contact from './pages/Contact'
-// Cursor component removed as requested
+import StudentRegistration from './pages/StudentRegistration'
+import ProfessionalRegistration from './pages/ProfessionalRegistration'
+import InstitutionRegistration from './pages/InstitutionRegistration'
+import Event from './pages/Event'
+
+// Import service pages
+import GamifiedLearning from './pages/services/GamifiedLearning'
+import EnterpriseTraining from './pages/services/EnterpriseTraining'
+import ConsultingServices from './pages/services/ConsultingServices'
+import CurriculumDesign from './pages/services/CurriculumDesign'
+import RDInnovations from './pages/services/RDInnovations'
+
 import './App.css'
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Initialize any global animations here
     const ctx = gsap.context(() => {
@@ -46,10 +55,17 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/research" element={<Research />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/student-benefits" element={<StudentRegistration />} />
+          <Route path="/professional-benefits" element={<ProfessionalRegistration />} />
+          <Route path="/institution-benefits" element={<InstitutionRegistration />} />
+          <Route path="/event" element={<Event />} />
+          
+          {/* Service page routes */}
+          <Route path="/gamified-learning" element={<GamifiedLearning />} />
+          <Route path="/enterprise-training" element={<EnterpriseTraining />} />
+          <Route path="/consulting-services" element={<ConsultingServices />} />
+          <Route path="/curriculum-design" element={<CurriculumDesign />} />
+          <Route path="/rd-innovations" element={<RDInnovations />} />
         </Routes>
       </main>
       <Footer />

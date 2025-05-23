@@ -1,7 +1,9 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const BenefitsSection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -72,61 +74,20 @@ const BenefitsSection = () => {
           <path d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       )
-    },
-    {
-      title: "IT Companies",
-      benefits: [
-        "Access to skilled talent pool",
-        "Customized training solutions",
-        "R&D partnership opportunities",
-        "Technology adoption consulting",
-        "Reduced onboarding time for new hires"
-      ],
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 9H16C16.5304 9 17.0391 9.21071 17.4142 9.58579C17.7893 9.96086 18 10.4696 18 11V21H6V11C6 10.4696 6.21071 9.96086 6.58579 9.58579C6.96086 9.21071 7.46957 9 8 9H12Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 9V5C12 4.46957 12.2107 3.96086 12.5858 3.58579C12.9609 3.21071 13.4696 3 14 3H18C18.5304 3 19.0391 3.21071 19.4142 3.58579C19.7893 3.96086 20 4.46957 20 5V7" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 9V5C12 4.46957 11.7893 3.96086 11.4142 3.58579C11.0391 3.21071 10.5304 3 10 3H6C5.46957 3 4.96086 3.21071 4.58579 3.58579C4.21071 3.96086 4 4.46957 4 5V7" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    },
-    {
-      title: "Government",
-      benefits: [
-        "High-impact public–private initiatives",
-        "Regional development in Sagar, MP",
-        "Job creation and economic growth",
-        "Technology-driven governance solutions",
-        "Educational ecosystem development"
-      ],
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 22H21" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M6 18V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M10 18V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M14 18V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M18 18V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 2L2 7H22L12 2Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    },
-    {
-      title: "Investors",
-      benefits: [
-        "High-growth investment opportunity",
-        "Exposure to innovative EdTech solutions",
-        "Participation in transformative R&D projects",
-        "Social impact through education advancement",
-        "Potential for significant returns"
-      ],
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 1V23" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6313 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6313 13.6815 18 14.5717 18 15.5C18 16.4283 17.6313 17.3185 16.9749 17.9749C16.3185 18.6313 15.4283 19 14.5 19H6" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
     }
   ];
+
+  const handleNavigate = (title) => {
+    if (title === "Students") {
+      navigate('/student-benefits#student-registration-form');
+    } else if (title === "Working Professionals") {
+      navigate('/professional-benefits#professional-registration-form');
+    } else if (title === "Academic Institutions") {
+      navigate('/institution-benefits#institution-registration-form');
+    } else {
+      navigate('/benefits-registration');
+    }
+  };
 
   return (
     <section ref={sectionRef} id="benefits" style={{ padding: '8rem 0' }}>
@@ -137,7 +98,6 @@ const BenefitsSection = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <h2 className="section-title">Who Benefits</h2>
-          
           <div className="grid" style={{ 
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '2rem',
@@ -148,19 +108,29 @@ const BenefitsSection = () => {
                 key={index}
                 variants={itemVariants}
                 className="benefit-card"
-                style={{
+                initial={{
                   backgroundColor: 'rgba(30, 30, 30, 0.6)',
+                  borderColor: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)'
+                }}
+                style={{
                   backdropFilter: 'blur(10px)',
                   borderRadius: '10px',
                   padding: '2rem',
                   border: '1px solid rgba(255, 255, 255, 0.05)',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  height: '100%'
+                  transition: 'transform 0.3s ease',
+                  height: '100%',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column'
                 }}
                 whileHover={{
                   y: -10,
+                  backgroundColor: 'rgba(30, 30, 30, 0.8)',
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
                 }}
+                onClick={() => handleNavigate(beneficiary.title)}
               >
                 <div style={{
                   display: 'flex',
@@ -182,7 +152,7 @@ const BenefitsSection = () => {
                   <h3 style={{ margin: 0 }}>{beneficiary.title}</h3>
                 </div>
                 
-                <ul style={{ paddingLeft: '1.5rem' }}>
+                <ul style={{ paddingLeft: '1.5rem', flex: '1' }}>
                   {beneficiary.benefits.map((benefit, i) => (
                     <motion.li 
                       key={i}
@@ -196,6 +166,53 @@ const BenefitsSection = () => {
                     </motion.li>
                   ))}
                 </ul>
+                
+                {(beneficiary.title === "Students" || beneficiary.title === "Working Professionals" || beneficiary.title === "Academic Institutions") && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    style={{ 
+                      marginTop: 'auto', 
+                      textAlign: 'center',
+                      width: '100%',
+                      paddingTop: '1.5rem'
+                    }}
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNavigate(beneficiary.title);
+                      }}
+                      style={{
+                        backgroundColor: '#00c2ff',
+                        color: '#000',
+                        border: 'none',
+                        borderRadius: '5px',
+                        padding: '0.75rem 1.5rem',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 4px 10px rgba(0, 194, 255, 0.3)',
+                        width: '80%'
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = '#33ceff';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 15px rgba(0, 194, 255, 0.4)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = '#00c2ff';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 194, 255, 0.3)';
+                      }}
+                    >
+                    Register now
+                    </button>
+                  </motion.div>
+                )}
               </motion.div>
             ))}
           </div>

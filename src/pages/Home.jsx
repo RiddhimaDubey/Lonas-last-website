@@ -8,6 +8,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import TeamSection from '../components/TeamSection';
 import InsightsSection from '../components/InsightsSection';
 
+
 const Home = () => {
   return (
     <div className="home-page">

@@ -91,8 +91,41 @@ const InsightsSection = () => {
         >
           <h2 className="section-title" style={{ textAlign: 'center', marginBottom: '2rem' }}>Insights & News</h2>
           
-          {/* Blog & Newsletter */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', marginTop: '4rem' }}>
+            {/* Latest News */}
+            <motion.div variants={itemVariants}>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '2rem', textAlign: 'center' }}>Latest News</h3>
+              
+              <div style={newsContainerStyle}>
+                {newsItems.map((item, index) => (
+                  <motion.div 
+                    key={index} 
+                    variants={itemVariants}
+                    style={newsItemStyle}
+                  >
+                    <div style={newsContentStyle}>
+                      <span style={newsDateStyle}>{item.date}</span>
+                      <h4 style={newsTitleStyle}>{item.title}</h4>
+                      <p style={newsExcerptStyle}>{item.excerpt}</p>
+                      <a href={item.link} style={readMoreStyle}>
+                        Read Full Story
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.5rem' }}>
+                          <path d="M5 12H19" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 5L19 12L12 19" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </a>
+                    </div>
+                    {index === 0 && (
+                      <div style={featuredBadgeStyle}>
+                        Featured
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Blog & Newsletter */}
             <motion.div variants={itemVariants} style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>Blog & Newsletter</h3>
               <p style={{ fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 2rem' }}>
@@ -101,7 +134,7 @@ const InsightsSection = () => {
               
               {/* Newsletter Subscription */}
               <div style={subscriptionContainerStyle}>
-                <form onSubmit={handleSubscribe} style={subscriptionFormStyle}>
+                <form onSubmit={handleSubscribe} className="subscription-form" style={subscriptionFormStyle}>
                   <input
                     type="email"
                     value={email}
@@ -149,39 +182,6 @@ const InsightsSection = () => {
                 ))}
               </div>
             </motion.div>
-            
-            {/* Latest News */}
-            <motion.div variants={itemVariants}>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '2rem', textAlign: 'center' }}>Latest News</h3>
-              
-              <div style={newsContainerStyle}>
-                {newsItems.map((item, index) => (
-                  <motion.div 
-                    key={index} 
-                    variants={itemVariants}
-                    style={newsItemStyle}
-                  >
-                    <div style={newsContentStyle}>
-                      <span style={newsDateStyle}>{item.date}</span>
-                      <h4 style={newsTitleStyle}>{item.title}</h4>
-                      <p style={newsExcerptStyle}>{item.excerpt}</p>
-                      <a href={item.link} style={readMoreStyle}>
-                        Read Full Story
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.5rem' }}>
-                          <path d="M5 12H19" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M12 5L19 12L12 19" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </a>
-                    </div>
-                    {index === 0 && (
-                      <div style={featuredBadgeStyle}>
-                        Featured
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -201,13 +201,7 @@ const subscriptionContainerStyle = {
 };
 
 const subscriptionFormStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '1rem',
-  width: '100%',
-  '@media (max-width: 768px)': {
-    flexDirection: 'column'
-  }
+  width: '100%'
 };
 
 const inputStyle = {
@@ -351,4 +345,4 @@ const featuredBadgeStyle = {
   fontWeight: 'bold'
 };
 
-export default InsightsSection;
+export default InsightsSection; 

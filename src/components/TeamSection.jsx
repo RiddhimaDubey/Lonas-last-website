@@ -1,17 +1,31 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const TeamSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+    height: typeof window !== 'undefined' ? window.innerHeight : 800
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
@@ -24,71 +38,105 @@ const TeamSection = () => {
     }
   };
 
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+    exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } }
+  };
+
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
+  const generateColorBackground = (index) => {
+    const colors = ['#1abc9c', '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#27ae60', '#2980b9', '#8e44ad', '#c0392b', '#d35400'];
+    return colors[index % colors.length];
+  };
+
+  const getInitials = (name) => name.split(' ').map(part => part[0]).join('').toUpperCase();
+
   const teamMembers = [
     {
       name: "Dr. Aisha Patel",
       role: "Chief Research Officer",
-      bio: "With a Ph.D. in Computer Science and 10+ years in AI research, Dr. Patel leads our R&D initiatives with a focus on educational technology innovation.",
-      image: "/images/team/team-member-1.jpg"
+      bio: "With a Ph.D. in Computer Science and 10+ years in AI research...",
+      color: generateColorBackground(0),
+      linkedin: "https://linkedin.com/in/aisha-patel",
+      twitter: "https://twitter.com/aishapatel"
+    },
+   
+    {
+      name: "Dr. John Doe",
+      role: "Lead Data Scientist",
+      bio: "Expert in machine learning and data analytics...",
+      color: generateColorBackground(1),
+      linkedin: "https://linkedin.com/in/johndoe",
+      twitter: "https://twitter.com/johndoe"
     },
     {
-      name: "Marcus Johnson",
-      role: "Head of Learning Design",
-      bio: "Former educator with expertise in gamification and interactive learning, Marcus transforms complex concepts into engaging educational experiences.",
-      image: "/images/team/team-member-2.jpg"
+      name: "Jane Smith",
+      role: "Software Engineer",
+      bio: "Passionate about building scalable web applications...",
+      color: generateColorBackground(2),
+      linkedin: "https://linkedin.com/in/janesmith",
+      twitter: "https://twitter.com/janesmith"
     },
     {
-      name: "Sophia Chen",
-      role: "Technical Lead",
-      bio: "Full-stack developer with a passion for creating intuitive user interfaces and robust backend systems for educational platforms.",
-      image: "/images/team/team-member-3.jpg"
+      name: "Michael Brown",
+      role: "UX/UI Designer",
+      bio: "Designing user-friendly interfaces and experiences...",
+      color: generateColorBackground(3),
+      linkedin: "https://linkedin.com/in/michaelbrown",
+      twitter: "https://twitter.com/michaelbrown"
+    },
+    {
+      name: "Emily Davis",
+      role: "Marketing Specialist",
+      bio: "Expert in digital marketing strategies and social media...",
+      color: generateColorBackground(4),
+      linkedin: "https://linkedin.com/in/emilydavis",
+      twitter: "https://twitter.com/emilydavis"
+    },
+    {
+      name: "David Wilson",
+      role: "Product Manager",
+      bio: "Bridging the gap between technology and business...",
+      color: generateColorBackground(5),
+      linkedin: "https://linkedin.com/in/davidwilson",
+      twitter: "https://twitter.com/davidwilson"
+    },
+    {
+      name: "Sarah Johnson",
+      role: "Data Analyst",
+      bio: "Transforming data into actionable insights...",
+      color: generateColorBackground(6),
+      linkedin: "https://linkedin.com/in/sarahjohnson",
+      twitter: "https://twitter.com/sarahjohnson"
+    },
+    {
+      name: "Chris Lee",
+      role: "DevOps Engineer",
+      bio: "Ensuring smooth deployment and operation of applications...",
+      color: generateColorBackground(7),
+      linkedin: "https://linkedin.com/in/chrislee",
+      twitter: "https://twitter.com/chrislee"
     }
+
+
+    
   ];
 
-  const coreValues = [
-    {
-      title: "Innovation",
-      description: "We constantly push boundaries, embracing new ideas and technologies to transform education and research.",
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 16L7 13.5V8.5L12 6L17 8.5V13.5L12 16Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 6V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M7 8.5L12 11L17 8.5" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    },
-    {
-      title: "Agility",
-      description: "We adapt quickly to changing environments, embracing challenges with enthusiasm and flexibility.",
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 6V12L16 14" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    },
-    {
-      title: "Impact",
-      description: "We measure our success by the meaningful difference we make in education and research outcomes.",
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 12H18L15 21L9 3L6 12H2" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    },
-    {
-      title: "Collaboration",
-      description: "We believe in the power of partnerships and teamwork to achieve extraordinary results.",
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )
-    }
-  ];
+  const handleMemberClick = (member) => {
+    setSelectedMember(member);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setSelectedMember(null);
+    document.body.style.overflow = 'auto';
+  };
 
   return (
     <section ref={sectionRef} id="team" style={{ padding: '8rem 0' }}>
@@ -101,156 +149,214 @@ const TeamSection = () => {
         >
           <h2 className="section-title">Our Team & Culture</h2>
           <p style={{ fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 4rem' }}>
-            Our nimble, multidisciplinary teams work collaboratively in open-plan labs, 
-            fostering innovation and rapid development of breakthrough solutions.
+            Our nimble, multidisciplinary teams work collaboratively in open-plan labs...
           </p>
-          
-          {/* Team Members */}
-          <div className="team-grid" style={teamGridStyle}>
+
+          <div style={teamGridStyle}>
             {teamMembers.map((member, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={itemVariants}
-                className="team-member"
                 style={teamMemberStyle}
+                onClick={() => handleMemberClick(member)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && handleMemberClick(member)}
+                aria-label={`More about ${member.name}`}
               >
-                <div className="member-image" style={memberImageContainerStyle}>
-                  <div style={{
-                    ...memberImageStyle,
-                    backgroundImage: `url(${member.image})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover'
-                  }}></div>
+                <div style={memberImageContainerStyle}>
+                  <div style={{ ...memberAvatarStyle, backgroundColor: member.color }}>
+                    <span style={initialsStyle}>{getInitials(member.name)}</span>
+                  </div>
                 </div>
-                <div className="member-info" style={memberInfoStyle}>
+                <div style={memberInfoStyle}>
                   <h3>{member.name}</h3>
-                  <h4 style={{ color: '#00c2ff', marginBottom: '1rem' }}>{member.role}</h4>
-                  <p>{member.bio}</p>
+                  <h4 style={{ color: '#00c2ff', marginBottom: '0.5rem' }}>{member.role}</h4>
                 </div>
               </motion.div>
             ))}
           </div>
-          
-          {/* Core Values */}
-          <motion.div
-            variants={containerVariants}
-            style={{ marginTop: '6rem' }}
-          >
-            <h3 style={{ fontSize: '1.8rem', marginBottom: '3rem' }}>Core Values</h3>
-            
-            <div className="values-grid" style={valuesGridStyle}>
-              {coreValues.map((value, index) => (
-                <motion.div 
-                  key={index} 
-                  variants={itemVariants}
-                  className="value-card" 
-                  style={valueCardStyle}
-                >
-                  <div className="value-icon" style={valueIconStyle}>
-                    {value.icon}
-                  </div>
-                  <h3>{value.title}</h3>
-                  <p>{value.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {selectedMember && (
+          <motion.div
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={closeModal}
+            style={modalBackdropStyle}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={(e) => e.stopPropagation()}
+              style={modalContainerStyle}
+            >
+              <button onClick={closeModal} style={closeButtonStyle} aria-label="Close">
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+
+              <div style={modalContentStyle}>
+                <div style={modalImageContainerStyle}>
+                  <div style={{ ...modalAvatarStyle, backgroundColor: selectedMember.color }}>
+                    <span style={modalInitialsStyle}>{getInitials(selectedMember.name)}</span>
+                  </div>
+                </div>
+
+                <div style={modalInfoStyle}>
+                  <h2 id="modal-title" style={{ marginBottom: '0.5rem' }}>{selectedMember.name}</h2>
+                  <h3 style={{ color: '#00c2ff', marginBottom: '1rem' }}>{selectedMember.role}</h3>
+                  <p style={{ marginBottom: '1rem' }}>{selectedMember.bio}</p>
+                  <div>
+                    <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" style={iconLinkStyle}>
+                      <FontAwesomeIcon icon={faLinkedin} size="lg" />
+                    </a>
+                    <a href={selectedMember.twitter} target="_blank" rel="noopener noreferrer" style={iconLinkStyle}>
+                      <FontAwesomeIcon icon={faTwitter} size="lg" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
+export default TeamSection;
+
+// ------------------------------
+// ✅ Style Objects (same file)
+// ------------------------------
 const teamGridStyle = {
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
   gap: '2rem',
-  marginTop: '3rem'
 };
 
 const teamMemberStyle = {
-  backgroundColor: 'rgba(30, 30, 30, 0.6)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '10px',
-  overflow: 'hidden',
-  border: '1px solid rgba(255, 255, 255, 0.05)',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  height: '100%',
-  ':hover': {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
-  }
+  cursor: 'pointer',
+  background: '#101010',
+  padding: '1.5rem',
+  borderRadius: '1rem',
+  textAlign: 'center',
+  transition: 'transform 0.3s',
 };
 
 const memberImageContainerStyle = {
-  width: '100%',
-  height: '220px',
-  overflow: 'hidden'
+  display: 'flex',
+  justifyContent: 'center',
+  marginBottom: '1rem',
 };
 
-const memberImageStyle = {
-  width: '100%',
-  height: '100%',
-  transition: 'transform 0.5s ease'
-};
-
-const memberInfoStyle = {
-  padding: '1.5rem'
-};
-
-const valuesGridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-  gap: '2rem'
-};
-
-const valueCardStyle = {
-  backgroundColor: 'rgba(30, 30, 30, 0.6)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '10px',
-  padding: '2rem',
-  textAlign: 'center',
-  border: '1px solid rgba(255, 255, 255, 0.05)',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  height: '100%'
-};
-
-const valueIconStyle = {
+const memberAvatarStyle = {
   width: '80px',
   height: '80px',
   borderRadius: '50%',
-  backgroundColor: 'rgba(0, 194, 255, 0.1)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '#fff',
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+};
+
+const initialsStyle = {
+  fontSize: '1.5rem',
+  fontWeight: '600',
+};
+
+const memberInfoStyle = {
+  color: '#fff',
+};
+
+const modalBackdropStyle = {
+  position: 'fixed',
+  top: 0, left: 0, right: 0, bottom: 0,
+  backgroundColor: 'rgba(0,0,0,0.7)',
+  zIndex: 999,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  margin: '0 auto 1.5rem'
 };
 
-const cultureImageContainerStyle = {
-  position: 'relative',
-  width: '100%',
-  maxWidth: '1000px',
-  height: '400px',
-  margin: '0 auto',
-  borderRadius: '10px',
-  overflow: 'hidden'
-};
 
-const cultureImageStyle = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover'
-};
-
-const cultureOverlayStyle = {
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
+const modalContainerStyle = {
+  backgroundColor: '#181818',
+  color: '#fff',
   padding: '2rem',
-  background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)',
-  color: 'white',
-  textAlign: 'left'
+  borderRadius: '1rem',
+  maxWidth: '600px',
+  width: '90%',
+  boxShadow: '0 0 30px rgba(0,0,0,0.5)',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  maxHeight: '90vh',
+  overflowY: 'auto',
+  zIndex: 10000, // keep high zIndex for modal
 };
 
-export default TeamSection;
+const closeButtonStyle = {
+  position: 'absolute',
+  top: '1rem',
+  right: '1rem',
+  background: 'transparent',
+  border: 'none',
+  color: '#fff',
+  fontSize: '1.25rem',
+  cursor: 'pointer',
+};
+
+const modalContentStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '1.5rem',
+};
+
+const modalImageContainerStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+};
+
+const modalAvatarStyle = {
+  width: '100px',
+  height: '100px',
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '#fff',
+  fontSize: '2rem',
+  fontWeight: 'bold',
+};
+
+const modalInitialsStyle = {
+  fontSize: '2rem',
+  fontWeight: '700',
+};
+
+const modalInfoStyle = {
+  textAlign: 'center',
+};
+
+const iconLinkStyle = {
+  color: '#00c2ff',
+  margin: '0 0.5rem',
+  textDecoration: 'none',
+  fontSize: '1.25rem',
+};
+
+

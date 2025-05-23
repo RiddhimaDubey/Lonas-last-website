@@ -77,18 +77,18 @@ const AboutSection = () => {
             </p>
             
             <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Our Mission</h3>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Our Mission & Vision</h3>
               <p>
-                Democratize future-ready tech education and deliver transformative research outcomes.
+              We aim to democratize future-ready tech education and deliver transformative research outcomes, establishing Lanos as the global epicenter for EdTech and R&D breakthroughs—catalyzing 25,000 jobs in Sagar, MP by 2027.
               </p>
             </div>
             
-            <div>
+            {/* <div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Our Vision</h3>
               <p>
                 Establish Lanos as the global epicenter for EdTech & R&D breakthroughs, catalyzing 25,000 jobs in Sagar, MP by 2027.
               </p>
-            </div>
+            </div> */}
           </motion.div>
           
           {/* Right column - Stats */}
@@ -118,7 +118,7 @@ const AboutSection = () => {
             </div>
             
             <div className="stat-card" style={statCardStyle}>
-              <h3 className="stat-number" data-target="2">0</h3>
+              <h3 className="stat-number" data-target="10">0</h3>
               <p>R&D Innovations</p>
             </div>
           </motion.div>
@@ -140,11 +140,11 @@ const AboutSection = () => {
           }}>
             <motion.div variants={itemVariants} className="value-card" style={valueCardStyle}>
               <div className="value-icon" style={valueIconStyle}>
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 16L7 13.5V8.5L12 6L17 8.5V13.5L12 16Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 6V11" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M7 8.5L12 11L17 8.5" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00208 12 2.00208C11.6489 2.00208 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M3.27002 6.96002L12 12L20.73 6.96002" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 22.08V12" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               </div>
               <h3>Innovation</h3>
               <p>We constantly push boundaries to create cutting-edge solutions that transform education and technology.</p>
@@ -159,8 +159,8 @@ const AboutSection = () => {
                   <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <h3>Teamwork</h3>
-              <p>We believe in the power of partnerships and collaboration to achieve extraordinary results.</p>
+              <h3>Employment Generation</h3>
+              <p>We believe in generating more employment opportunities in regions where engineers and freshers struggle to find growth-oriented jobs.</p>
             </motion.div>
             
             <motion.div variants={itemVariants} className="value-card" style={valueCardStyle}>
@@ -181,8 +181,8 @@ const AboutSection = () => {
                   <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <h3>Vision</h3>
-              <p>We look beyond the present to create solutions that will shape the future of education and technology.</p>
+              <h3>Collaboration</h3>
+              <p>We believe that collaboration is the key to rapid and sustainable growth in the technological landscape.</p>
             </motion.div>
           </div>
         </motion.div>

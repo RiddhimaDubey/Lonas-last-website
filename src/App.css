@@ -1,10 +1,12 @@
 /* App-specific styles */
 main {
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
+  padding-top: 5px;
+  scroll-padding-top: 5px;
   background-color: var(--primary-color);
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 main::before {
@@ -157,6 +159,14 @@ section::after {
 .animated-link {
   position: relative;
   display: inline-block;
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: color var(--transition-medium);
+}
+
+.animated-link:hover {
+  color: var(--accent-color);
 }
 
 .animated-link::after {
@@ -174,11 +184,229 @@ section::after {
   width: 100%;
 }
 
+/* Footer specific link styles */
+footer .animated-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
+}
+
+footer .animated-link:hover {
+  color: var(--accent-color);
+}
+
+footer .animated-link::after {
+  bottom: 0;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .bg-element-1, .bg-element-2, .bg-element-3, .bg-element-4 {
     opacity: 0.08;
     width: 300px;
     height: 300px;
+  }
+}
+
+/* Subscription form responsive styles */
+.subscription-form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .subscription-form {
+    flex-direction: column;
+  }
+}
+
+/* Form container styles */
+.form-container {
+  margin: 0;
+  padding: 0.75rem;
+  position: relative;
+}
+
+/* Ensure forms are visible when opened */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add styles for form pages */
+.form-page {
+  min-height: 100vh;
+  padding-top: 60px;
+  position: relative;
+}
+
+/* Enterprise Form Styles */
+.enterprise-form-container {
+  background: rgba(30, 30, 30, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.enterprise-form-container h3 {
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.enterprise-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.enterprise-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.enterprise-form-group input[type="text"],
+.enterprise-form-group input[type="email"],
+.enterprise-form-group input[type="tel"],
+.enterprise-form-group select,
+.enterprise-form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.enterprise-form-group input:focus,
+.enterprise-form-group select:focus,
+.enterprise-form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(0, 194, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.enterprise-form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.enterprise-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.enterprise-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.enterprise-checkbox-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.enterprise-checkbox-item input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.enterprise-checkbox-item input[type="checkbox"]:checked {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.enterprise-checkbox-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.enterprise-checkbox-item label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  cursor: pointer;
+  margin: 0;
+}
+
+.enterprise-submit-button {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-color-alt));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.enterprise-submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 194, 255, 0.2);
+}
+
+.enterprise-submit-button:active {
+  transform: translateY(0);
+}
+
+.enterprise-form-success {
+  background: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.enterprise-form-error {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+}
+
+@media (max-width: 768px) {
+  .enterprise-checkbox-group {
+    grid-template-columns: 1fr;
+  }
+  
+  .enterprise-form-container {
+    padding: 1.5rem;
+  }
+  
+  .enterprise-submit-button {
+    width: 100%;
+    justify-content: center;
   }
 }

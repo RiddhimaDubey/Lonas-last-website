@@ -145,15 +145,20 @@ const HeroSection = () => {
 
   return (
     <section 
+      id="hero"
       ref={heroRef}
       style={{
-        height: '100vh',
+        minHeight: '110vh',
+        height: '110vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
-        backgroundColor: 'var(--primary-color)'
+        backgroundColor: 'var(--primary-color)',
+        marginTop: '-60px',
+        paddingTop: '60px',
+        boxSizing: 'border-box'
       }}
     >
       <div ref={orbsRef} style={{
@@ -162,7 +167,8 @@ const HeroSection = () => {
         height: '100%',
         top: 0,
         left: 0,
-        zIndex: 0
+        zIndex: 0,
+        pointerEvents: 'none'
       }} />
       <div ref={particlesRef} style={{
         position: 'absolute',
@@ -170,27 +176,40 @@ const HeroSection = () => {
         height: '100%',
         top: 0,
         left: 0,
-        zIndex: 1
+        zIndex: 1,
+        pointerEvents: 'none'
       }} />
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="container" style={{ 
+        position: 'relative', 
+        zIndex: 2,
+        width: '100%',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '0 1rem'
+      }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.8 }}
+            style={{ padding: '2rem 0' }}
+          >
             <h1 ref={textRef} style={{ marginBottom: '2rem', position: 'relative', display: 'inline-block' }}>
-<span style={{ 
-                  fontWeight: 800, 
-                  letterSpacing: '1px', 
-                  WebkitFontSmoothing: 'antialiased', 
-                  textRendering: 'optimizeLegibility',
-                  color: '#ffffff',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-                }}>
+              <span style={{ 
+                fontWeight: 800, 
+                letterSpacing: '1px', 
+                WebkitFontSmoothing: 'antialiased', 
+                textRendering: 'optimizeLegibility',
+                color: '#ffffff',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              }}>
                 <span style={{ color: 'var(--accent-color)' }}>Lanos</span>
                 <span style={{ margin: '0 1rem' }}>–</span>
                 <span>Agile</span>
                 <span style={{ margin: '0 0.5rem', color: 'var(--accent-color)', fontWeight: 600 }}>EdTech</span>
                 <span style={{ margin: '0 0.5rem' }}>&amp;</span>
                 <span style={{ margin: '0 0.5rem', color: 'var(--accent-color)', fontWeight: 600 }}>R&amp;D</span>
-                <span>Startup</span>
+                <span>StartUp</span>
               </span>
               <motion.div
                 initial={{ width: 0 }}
@@ -213,7 +232,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem' }}
           >
-            Founded in 2024 in Sagar, Madhya Pradesh, Lanos is a lean, innovation-obsessed startup tackling education and technology challenges through integrated R&D and gamified learning platforms.
+            Founded in February 2024 in Sagar, Madhya Pradesh, Lanos is a lean, innovation-obsessed startup tackling education and emerging technology challenges through integrated research and development.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -221,12 +240,12 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '2rem' }}
           >
-            <Link to="/about" className="btn btn-outline">
-              <span>Learn More</span>
-            </Link>
-            <Link to="/contact" className="btn btn-outline">
+            <a href="#contact" onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }} className="btn btn-outline">
               <span>Get in Touch</span>
-            </Link>
+            </a>
           </motion.div>
         </div>
       </div>

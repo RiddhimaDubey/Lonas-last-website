@@ -1,9 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faPhone, faMapMarkerAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { processFormData } from '../utils/whatsappIntegration';
+import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -19,9 +17,6 @@ const ContactSection = () => {
     message: ''
   });
   
-  // Contact phone number
-  const phoneNumber = '+91 9109279790'; 
-  
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   
@@ -33,7 +28,7 @@ const ContactSection = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -47,46 +42,23 @@ const ContactSection = () => {
     }
     
     try {
-      // Process the form data using the imported utility function
-      const processingSuccess = processFormData(formData);
+      // Here you would typically send the form data to your backend
+      // For now, we'll simulate a successful submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (processingSuccess) {
-        // Generate WhatsApp URL with form data
-        const formattedMessage = `
-*New Contact Form Submission*
----------------------------
-*Name:* ${formData.name}
-*Email:* ${formData.email}
-*Subject:* ${formData.subject || 'N/A'}
-*Message:* ${formData.message}
----------------------------
-Sent from Lanos Website
-`;
-        
-        // Create the WhatsApp URL with the encoded message
-        const encodedMessage = encodeURIComponent(formattedMessage);
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
-        
-        // Send the message directly via WhatsApp API
-        window.location.href = whatsappUrl;
-        
-        // Show success message
-        setFormStatus({
-          submitted: true,
-          success: true,
-          message: 'Thank you for your message! Sending to our team...'
-        });
-        
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } else {
-        throw new Error('Form processing failed');
-      }
+      setFormStatus({
+        submitted: true,
+        success: true,
+        message: 'Thank you for your message! We will get back to you soon.'
+      });
+      
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
     } catch (error) {
       setFormStatus({
         submitted: true,
@@ -178,31 +150,6 @@ Sent from Lanos Website
                   <div>
                     <h4 style={{ margin: 0, marginBottom: '0.2rem' }}>Phone</h4>
                     <a href="tel:+919109279790" className="animated-link">+91 91092 79790</a>
-                  </div>
-                </div>
-                
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center',
-                  marginBottom: '1.5rem'
-                }}>
-                  <div style={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(0, 194, 255, 0.1)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginRight: '1rem'
-                  }}>
-                    <FontAwesomeIcon icon={faWhatsapp} style={{ color: 'var(--accent-color)' }} />
-                  </div>
-                  <div>
-                    <h4 style={{ margin: 0, marginBottom: '0.2rem' }}>WhatsApp</h4>
-                    <a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" className="animated-link">
-                      +91 91092 79790
-                    </a>
                   </div>
                 </div>
                 
@@ -365,15 +312,11 @@ Sent from Lanos Website
                         width: '100%', 
                         display: 'flex', 
                         alignItems: 'center', 
-                        justifyContent: 'center', 
-                        gap: '0.5rem',
-                        backgroundColor: '#25D366', // WhatsApp green color
-                        borderColor: '#25D366'
+                        justifyContent: 'center'
                       }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <FontAwesomeIcon icon={faWhatsapp} />
                       Send Message
                     </motion.button>
                   </form>
